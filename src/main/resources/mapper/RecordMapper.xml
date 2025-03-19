@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.sea.turtle.soup.turup.dao.mapper.RecordMapper">
+
+    <!-- 查询用户游戏记录 -->
+    <select id="getUserGameRecords" resultType="com.sea.turtle.soup.turup.dto.resp.RecordResponse">
+        SELECT
+            r.id AS recordId,
+            r.score,
+            r.question_count AS questionCount,
+            r.start_time AS startTime,
+            r.end_time AS endTime,
+            p.id AS puzzleId,
+            p.title AS puzzleTitle,
+            p.type AS puzzleType,
+            p.difficulty AS puzzleDifficulty
+        FROM
+            record r
+                JOIN
+            puzzle p ON r.puzzle_id = p.id
+        WHERE
+            r.user_id = #{userId}
+        ORDER BY
+            r.start_time DESC;
+    </select>
+
+</mapper>
